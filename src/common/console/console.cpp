@@ -33,7 +33,8 @@ auto Console::print(const char* format, ...) -> void
 {
     const char* project_name = PROJECT_NAME;
 
-    if (project_name == nullptr) {
+    if (project_name == nullptr)
+    {
         project_name = "cheat-sdk";
     }
 
@@ -49,7 +50,8 @@ auto Console::print_color(const char* format, ConsoleColor color, ...) -> void
 {
     const char* project_name = PROJECT_NAME;
 
-    if (project_name == nullptr) {
+    if (project_name == nullptr)
+    {
         project_name = "cheat-sdk";
     }
 

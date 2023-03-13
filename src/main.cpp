@@ -5,9 +5,9 @@
 #include <cstdint>
 #include <filesystem>
 
-#include "console/console.hpp"
+#include "common/console/console.hpp"
 
-auto __stdcall on_attach(LPVOID base) -> DWORD
+auto __stdcall on_attach(void* base) -> DWORD
 {
 #ifdef _DEBUG
     Console::get().attach();
@@ -28,7 +28,6 @@ auto __stdcall on_attach(LPVOID base) -> DWORD
     {
         Console::get().print("error occured during initalization:\n");
         Console::get().print("%s\n", exception.what());
-        Console::get().detach();
 
 		FreeLibraryAndExitThread(static_cast<HMODULE>(base), 1);
     }
@@ -43,7 +42,7 @@ auto __stdcall on_detach() -> int
     return TRUE;
 }
 
-auto __stdcall DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved) -> int
+auto __stdcall DllMain(HINSTANCE instance, DWORD reason, void* reserved) -> int
 {
     switch (reason)
     {
