@@ -56,11 +56,9 @@ jobs:
 
     # Build the Visual Studio project
     - name: Build
-      uses: microsoft/visual-studio-build-tools@v1.0.0
-      with:
-        solution: ${{ github.repository }}.sln
-        configuration: Release
-
+      run: |
+        choco install -y visualstudio2019buildtools
+        "& 'C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin/msbuild.exe' cheat-sdk.sln /p:Configuration=Release"
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
