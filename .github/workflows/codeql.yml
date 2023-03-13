@@ -64,8 +64,8 @@ jobs:
     - name: Install and build with Visual Studio Build Tools
       run: |
         choco install visualstudio2019buildtools --package-parameters "--includeRecommended --includeOptional --passive --locale en-US"
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
-        msbuild.exe /p:Configuration=Release /p:Platform=x64 ${{ github.repository }}.sln
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x86
+        msbuild.exe /p:Configuration=Release /p:Platform=x86 ${{ github.repository }}.sln
 
 
     - name: Perform CodeQL Analysis
