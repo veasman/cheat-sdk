@@ -42,15 +42,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Install choco package manager
-    - name: Install choco
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y gnupg
-        sudo apt-get install -y wget
-        wget https://chocolatey.org/install.sh
-        sudo sh install.sh
-
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
@@ -64,10 +55,18 @@ jobs:
         # queries: security-extended,security-and-quality
 
     # Build the Visual Studio project
-    - name: Build
+    #- name: Build
+    #  run: |
+    #    choco install -y visualstudio2019buildtools
+    #    "& 'C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin/msbuild.exe' cheat-sdk.sln /p:Configuration=Release"
+
+    # Install Visual Studio Build Tools and build the solution.
+    - name: Install and build with Visual Studio Build Tools
       run: |
-        choco install -y visualstudio2019buildtools
-        "& 'C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin/msbuild.exe' cheat-sdk.sln /p:Configuration=Release"
+        choco install visualstudio2019buildtools --package-parameters "--includeRecommended --includeOptional --passive --locale en-US"
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
+        msbuild.exe /p:Configuration=Release /p:Platform=x64 ${{ github.repository }}.sln
+
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
