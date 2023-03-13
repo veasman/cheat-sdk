@@ -22,6 +22,10 @@ This project is build using Visual Studio. To build:
 4. Select the "Debug" or "Release" build configuration.
 5. Build the solution.
 
+## Code Linting
+
+This project uses Github Actions to perform code linting on the `dev` branch using the Cppcheck tool.
+
 ## License
 
 Cheat-SDK is licensed under the MIT License. See LICENSE.txt for more information.

@@ -1,0 +1,36 @@
+name: Code Linting
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup C++ environment
+      uses: actions/setup-cpp@v2
+      with:
+        cpp-version: '20'
+
+    - name: Install Cppcheck or clang-tidy
+      run: |
+        sudo apt-get update
+        sudo apt-get install cppcheck
+
+    - name: Run code analysis
+      run: |
+        cppcheck --enable=all src/*.cpp
+        # or
+        # clang-tidy src/*.cpp -- -std=c++20
+
+    - name: Save analysis report
+      uses: actions/upload-artifact@v2
+      with:
+        name: analysis-report
+        path: analysis-report.txt
